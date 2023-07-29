@@ -32,6 +32,23 @@ int get_nth(int n, Node ** head_ptr){
     return tmp->val;
 }
 
+void insert_at_nth(int n, int ele, Node ** head_ptr){
+    Node * tmp = * head_ptr;
+
+    for(int i=1; i<(n-1); ++i){
+        if(tmp == NULL){
+            return;
+        }
+        tmp = tmp->next;
+    }
+
+    Node * new_node = new Node;
+    new_node->val = ele;
+    new_node->next = tmp->next;
+
+    tmp->next = new_node;
+}
+
 void display_all(Node **head_ptr){
     Node * tmp = * head_ptr;
 
@@ -48,10 +65,11 @@ int main(){
         insert_node(i*3,&head);
     }
 
-    display_all(&head);
+    int n = 7;
+    cout << n << "th element is" << " " << get_nth(n,&head) << endl << endl;
 
-    int n = 4;
-    cout << n << "th element is" << " " << get_nth(n,&head) << endl;
+    insert_at_nth(4,50,&head);
+    display_all(&head);
 
     return 0;
 }
