@@ -73,6 +73,31 @@ void display_all(Node **head_ptr){
     }    
 }
 
+int get_length(Node ** head_ptr ){
+    Node * tmp = * head_ptr;
+    
+    int len = 0;
+    while( tmp != NULL){
+        tmp = tmp->next;
+        len++;
+    }
+
+    return len;
+}
+
+int k_from_middle_towards_head(int k, Node ** head_ptr){
+    int length = get_length(head_ptr);
+
+    Node * tmp = * head_ptr;
+
+    for ( int i=1; i<(length/2 + 1 - k); ++i){
+        tmp = tmp->next;
+    }
+
+    return tmp->val;
+}
+
+
 int main(){
     Node * head = NULL;
 
@@ -81,7 +106,9 @@ int main(){
     }
 
     int n = 7;
+    int k = 2;
     cout << n << "th element is" << " " << get_nth(n,&head) << endl << endl;
+    cout << k << "th element from middle is" << " " << k_from_middle_towards_head(k,&head) << endl << endl;
 
     insert_at_nth(4,50,&head);
     delete_at_n(5,&head);
