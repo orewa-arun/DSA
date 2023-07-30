@@ -57,7 +57,33 @@ class Stack{
                 }
             }
         }
+
+
+        void sort(){
+            
+            Stack tmp;
+
+            while(!isEmpty()){
+                int x = pop();
+                
+                // if tmp ele > x, then remove in tmp until tmp is sorted when x is added 
+                // i.e remove until x is the largest element in tmp
+                while(!tmp.isEmpty() && tmp.peek() > x){
+                    push(tmp.pop());
+                }
+
+                // append when tmp.peek() < x
+                // i.e when tmp is sorted
+                tmp.push(x);
+            }
+
+            // descending order
+            while(!tmp.isEmpty()){
+                push(tmp.pop());
+            }
+        }
 };
+
 
 int main(){
     Stack s;
@@ -70,6 +96,7 @@ int main(){
 
     cout << s.pop() <<"\n";
 
+    s.sort();
     s.display();
     return 0;
 }
