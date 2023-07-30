@@ -88,6 +88,7 @@ class Stack{
         }
 };
 
+// s passed as reference
 void reverse(Stack * s){
     
     // s->top = -1; // inaccessible in outline functions
@@ -104,6 +105,47 @@ void reverse(Stack * s){
     }
 }
 
+// s passed as value
+float average(Stack s){
+    int sum = 0;
+    int length = s.length();
+
+    while(!s.isEmpty()){
+        sum += s.pop();
+    }
+
+    return (float) sum/length;
+}
+
+// s passed as value
+int largest_number(Stack s){
+    int largest = -1;
+
+    while(!s.isEmpty()){
+        int x = s.pop();
+        if(largest < x){
+            largest = x;
+        }
+    }
+
+    return largest;
+}
+
+void insert_at_nth(int data, int n, Stack * s){
+
+    int len = s->length();
+    Stack tmp;
+
+    for(int i=0; i< (len - n + 1); ++i){
+        tmp.push(s->pop());
+    }
+
+    s->push(data);
+
+    while(!tmp.isEmpty()){
+        s->push(tmp.pop());
+    }
+}
 
 int main(){
     Stack s;
@@ -112,7 +154,7 @@ int main(){
     s.push(5);
     s.push(7);
     s.push(9);
-    s.push(10);
+    s.push(4);
 
     // cout << s.pop() <<"\n";
 
@@ -120,6 +162,11 @@ int main(){
     // s.display();
 
     reverse(&s);
+
+    cout << "Average value of stack : " << average(s) << endl;
+    cout << "Largest value of stack : " << largest_number(s) << endl;
+
+    insert_at_nth(100,4,&s);
     s.display();
 
     return 0;
