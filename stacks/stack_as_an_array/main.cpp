@@ -47,6 +47,10 @@ class Stack{
             return (top == -1);
         }
 
+        int length(){
+            return (top + 1);
+        }
+
         void display(){
             if(top == -1){
                 cout <<"stack is empty";
@@ -84,6 +88,22 @@ class Stack{
         }
 };
 
+void reverse(Stack * s){
+    
+    // s->top = -1; // inaccessible in outline functions
+    int n = s->length();
+    int * arr = new int[n];
+
+    int i=0;
+    while(!s->isEmpty()){
+        arr[i++] = s->pop();
+    }
+
+    for(int i=0; i<n; ++i){
+        s->push(arr[i]);
+    }
+}
+
 
 int main(){
     Stack s;
@@ -94,9 +114,13 @@ int main(){
     s.push(9);
     s.push(10);
 
-    cout << s.pop() <<"\n";
+    // cout << s.pop() <<"\n";
 
     s.sort();
+    // s.display();
+
+    reverse(&s);
     s.display();
+
     return 0;
 }
