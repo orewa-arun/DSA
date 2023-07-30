@@ -41,6 +41,29 @@ void display_all(Node ** head_ptr){
     }
 }
 
+void insert_at_n_from_head(int n, int data, Node ** head_ptr){
+    Node * tmp = *head_ptr;
+
+    for(int i=1 ; i<(n-1); ++i){
+        if(tmp == NULL){
+            return;
+        }
+        tmp = tmp->next;
+    }
+
+    Node * new_node = new Node;
+    new_node->data = data;
+    new_node->next = tmp->next;
+    new_node->prev = tmp;
+    tmp->next = new_node;
+
+    tmp = new_node->next;
+
+    if(tmp != NULL){
+        tmp->prev = new_node;
+    }
+}
+
 void reverse(Node ** head_ptr){
     Node * current = * head_ptr;
     Node * next = NULL;
@@ -60,6 +83,8 @@ int main(){
     for( int i=0; i<10; ++i){
         append_data(&head,i*3);
     }
+
+    insert_at_n_from_head(3,40,&head);
 
     display_all(&head);
 
