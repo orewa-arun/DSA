@@ -147,11 +147,63 @@ void insert_at_nth(int data, int n, Stack * s){
     }
 }
 
+void delete_at_nth(int n, Stack * s){
+
+    int len = s->length();
+
+    Stack tmp;
+
+    for(int i=0; i < (len - n); ++i){
+        tmp.push(s->pop());
+    }
+
+    s->pop();
+
+    while(!tmp.isEmpty()){
+        s->push(tmp.pop());
+    }
+}
+
+bool check_if_x_exists_in_tmp(int x, int * arr,int len){
+    for (int i=0; i<len; ++i){
+        if(x == arr[i]){
+            return true;
+        }
+    }
+
+    return false;
+}
+
+void remove_duplicates(Stack * s){
+
+    int n = s->length();
+    int * tmp = new int[n];
+
+    int tmp_length = 0; 
+
+    while(!s->isEmpty()){
+        int x = s->pop();
+
+        bool check = check_if_x_exists_in_tmp(x,tmp,tmp_length);
+
+        if(!check){
+            tmp[tmp_length++] = x;
+        }
+    }
+
+    //copy all elements in tmp back to s
+    for(int j=0; j<tmp_length; ++j){
+        s->push(tmp[tmp_length - j - 1]);
+    }
+}
+
 int main(){
     Stack s;
     s.push(1);
     s.push(3);
     s.push(5);
+    s.push(5);
+    s.push(7);
     s.push(7);
     s.push(9);
     s.push(4);
@@ -167,6 +219,13 @@ int main(){
     cout << "Largest value of stack : " << largest_number(s) << endl;
 
     insert_at_nth(100,4,&s);
+    delete_at_nth(4,&s);
+
+    cout << "with duplicates " << endl;
+    s.display();
+
+    cout << "without duplicates" << endl;
+    remove_duplicates(&s);
     s.display();
 
     return 0;
