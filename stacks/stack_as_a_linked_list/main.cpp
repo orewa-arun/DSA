@@ -83,6 +83,66 @@ void sort(Stack * s){
     }
 }
 
+void insert_at_nth(int data,int n,Stack * s){
+    Stack tmp;
+
+    for(int i=0; i<(n-1); ++i){
+        tmp.push(s->pop());
+    }
+
+    s->push(data);
+
+    while(!tmp.isEmpty()){
+        s->push(tmp.pop());
+    }
+}
+
+void delete_at_nth(int n,Stack * s){
+    Stack tmp;
+
+    for(int i=0; i<(n-1); ++i){
+        tmp.push(s->pop());
+    }
+    
+    s->pop();
+
+    while(!tmp.isEmpty()){
+        s->push(tmp.pop());
+    }
+}
+
+bool is_present_in_tmp(int x, int * arr, int len){
+    for(int i=0; i<len; ++i){
+        if(arr[i] == x){
+            return true;
+        }
+    }
+
+    return false;
+}
+
+
+void remove_recurrences(Stack * s){
+    int * tmp = new int[100];
+    int len = 0;
+
+    while(!s->isEmpty()){
+        int x = s->pop();
+
+        bool check = is_present_in_tmp(x,tmp,len);
+
+        if(!check){
+            tmp[len++] = x;
+        }
+    }
+
+    //copy all array elements into stack
+    for(int i=0; i<len; ++i){
+        s->push(tmp[len - 1 - i]);
+    }
+
+}
+
 int main(){
     Stack s;
 
@@ -100,5 +160,9 @@ int main(){
     // cout << "popped element is " << x << endl;
 
     sort(&s);
+    insert_at_nth(10,3,&s);
+    delete_at_nth(3,&s);
+    remove_recurrences(&s);
+
     s.display();
 }
